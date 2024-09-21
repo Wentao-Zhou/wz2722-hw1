@@ -1,0 +1,146 @@
+---
+title: "p8105_hw1_wz2722"
+author: "wentao zhou"
+date: "2024-09-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+
+library("palmerpenguins")
+data("penguins", package = "palmerpenguins")
+
+```
+
+
+
+```{r}
+summary(penguins)
+```
+
+
+Problem 1
+
+Part1:description
+```{r}
+
+library(palmerpenguins)
+
+
+data("penguins")
+
+
+summary(penguins)
+
+
+n_rows <- nrow(penguins)
+n_cols <- ncol(penguins)
+
+
+mean_flipper_length <- mean(penguins$flipper_length_mm, na.rm = TRUE)
+
+mean_flipper_length
+
+```
+ The penguins dataset contains 344 rows and 8 columns. The mean flipper length is 200.92 mm.
+ 
+1.species: The species of the penguins (Adelie, Chinstrap, or Gentoo).
+
+2.island: The island where the penguins were observed (Biscoe, Dream, or Torgersen).
+
+3.bill_length_mm: The length of the penguins' bill (in millimeters).
+
+4.bill_depth_mm: The depth of the penguins' bill (in millimeters).
+
+5.flipper_length_mm: The length of the penguins' flippers (in millimeters).
+
+6.body_mass_g: The body mass of the penguins (in grams).
+
+7.sex: The sex of the penguins (male or female).
+
+8.year: the year of penguins (2007,2008,2009)
+
+Part 2.scatterplot
+```{r}
+
+library(ggplot2)
+
+
+
+scatter_plot <- ggplot(data = penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Scatterplot of Flipper Length vs Bill Length",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)") +
+  
+
+
+print(scatter_plot)
+
+
+
+
+```
+
+
+
+Problem 2.
+
+```{r}
+
+library(tidyverse)
+
+
+df <- tibble(
+  normal_sample = rnorm(10),                         
+  logical_vector = rnorm(10) > 0,                    
+  character_vector = letters[1:10],                  
+  factor_vector = factor(sample(c("3", "2", "1"),   
+                                
+                                size = 10, replace = TRUE))
+)
+
+
+print(df)
+
+
+mean(df$normal_sample) 
+
+mean(as.numeric(df$logical_vector))         
+
+
+mean(as.numeric(df$factor_vector))          
+
+
+mean(as.numeric(df$character_vector))       
+```
+Expected output:
+Normal_Sample: Since the average value is a number, there is no problem calculating it.
+
+Logical-vectorTrue: Forcefully converting to a number works fine, and R calculates the average of 1() and 0() as False.
+
+Factor-vector: When converting a factor to a number, it uses the underlying integer code at the factor level. The average value is the average of these integers.
+
+Character-vector: Converting characters (letters) to numbers will result in NA because R cannot convert any letter to a number.
+
+Explanation:
+The reason for the warning is that mean() requires a numerical or logical value. By forcibly converting logical and factor variables into numbers, the average can be calculated.
+Characters like letters do not correspond to numbers, so as. consumer (df $charcter-vector) will cause NAs.
+
+Conclusion:
+If you are dealing with strings that are similar to numbers, you can use 'as. numeric()' to convert them to numbers. However, if they are pure text (such as letters), attempting to take their average is meaningless, and R will return NA.
+
+
+
+
+
+
+
+
+ 
